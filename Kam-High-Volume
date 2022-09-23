@@ -1,0 +1,20 @@
+//@version=5
+//overlay=true
+indicator(title="Kam-High-Volume", shorttitle="Kam-Vol", overlay=true)
+
+
+//var string myVolText =   str.tostring(myVol)
+//plotshape(barstate.islast,text = myVolText)
+
+period = input.int(title="Period", defval=30, minval=5, maxval=500, step=1, confirm=true)
+multiplier = input.float(title="Multiplier",defval=0.5, minval=0.0, maxval=10.0, step=0.5, confirm=true)
+
+float myVol = 0
+isHighVolume = volume > ta.sma(volume, period)*multiplier
+if isHighVolume
+    myVol := volume
+
+//plotshape(barstate.islast,style=shape.xcross)
+//plotshape(myVol, title = "My Vol", style = shape.arrowup)
+//plotarrow(myVol, colorup=color.new(color.blue,10), colordown=color.new(color.orange,10),maxheight=30)
+plot(myVol, title = "High Volume",color=color.new(color.blue, 70), linewidth=2, style = plot.style_columns)

@@ -6,53 +6,54 @@
 indicator("My Volume Screener", "", true)
 var string GP1 = "Volume Average"
 
-string timeFrame  = input.string("D", "timeFrame",options=['60', 'D', 'W', 'M'], group = GP1,confirm=true)
+string timeFrame  = input.string("60", "timeFrame",options=['5','10','15','30','60', 'D', 'W', 'M'], group = GP1,confirm=true)
 int averagePeriod    = input.int(30, "Average", minval = 1, maxval = 100,step=1, group = GP1,confirm=true)
 float averageMultiplier  = input.float(1.5, "Multiplier", minval = 0.1, maxval = 10.0,step=0.1, group = GP1,confirm=true)
-someFunc() => volume > ta.sma(volume, averagePeriod)*averageMultiplier
+// close > open and math.abs(open-low) > 3*math.abs(close-open) and math.abs(open-low) > math.abs(high-open) // Hammer
+filterFunc() => volume > ta.sma(volume, averagePeriod)*averageMultiplier and close > open
 
 scannerArray = array.new_string()
 
-s1 = request.security("NSE:BANKNIFTY",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "NIFTY BANK - BANKNIFTY"  : ""
-s2 = request.security("NSE:NIFTY",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "NIFTY 50 - NIFTY"  : ""
-s3 = request.security("NSE:ACC",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ACC LIMITED - ACC"  : ""
-s4 = request.security("NSE:ACC",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ACC LIMITED - ACC"  : ""
-s5 = request.security("NSE:ACC",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ACC LIMITED - ACC"  : ""
-s6 = request.security("NSE:ACC",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ACC LIMITED - ACC"  : ""
-s7 = request.security("NSE:ABFRL",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ADITYA BIRLA FASHION & RT - ABFRL"  : ""
-s8 = request.security("NSE:IOC",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "INDIAN OIL CORP LTD - IOC"  : ""
-s9 = request.security("NSE:AMBUJACEM",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "AMBUJA CEMENTS LTD - AMBUJACEM"  : ""
-s10 = request.security("NSE:ASTRAL",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ASTRAL LIMITED - ASTRAL"  : ""
-s11 = request.security("NSE:ABB",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ABB INDIA LIMITED - ABB"  : ""
-s12 = request.security("NSE:AUBANK",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "AU SMALL FINANCE BANK LTD - AUBANK"  : ""
-s13 = request.security("NSE:ADANIENT",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ADANI ENTERPRISES LIMITED - ADANIENT"  : ""
-s14 = request.security("NSE:BEL",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "BHARAT ELECTRONICS LTD - BEL"  : ""
-s15 = request.security("NSE:BHEL",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "BHEL - BHEL"  : ""
-s16 = request.security("NSE:CHAMBLFERT",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "CHAMBAL FERTILIZERS LTD - CHAMBLFERT"  : ""
-s17 = request.security("NSE:COALINDIA",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "COAL INDIA LTD - COALINDIA"  : ""
-s18 = request.security("NSE:CROMPTON",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "CROMPT GREA CON ELEC LTD - CROMPTON"  : ""
-s19 = request.security("NSE:DELTACORP",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "DELTA CORP LIMITED - DELTACORP"  : ""
-s20 = request.security("NSE:CHOLAFIN",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "CHOLAMANDALAM IN & FIN CO - CHOLAFIN"  : ""
-s21 = request.security("NSE:ABBOTINDIA",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ABBOTT INDIA LIMITED - ABBOTINDIA"  : ""
-s22 = request.security("NSE:ADANIPORTS",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ADANI PORT & SEZ LTD - ADANIPORTS"  : ""
-s23 = request.security("NSE:ABCAPITAL",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ADITYA BIRLA CAPITAL LTD. - ABCAPITAL"  : ""
-s24 = request.security("NSE:AMARAJABAT",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "AMARA RAJA BATTERIES LTD. - AMARAJABAT"  : ""
-s25 = request.security("NSE:GRASIM",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "GRASIM INDUSTRIES LTD - GRASIM"  : ""
-s26 = request.security("NSE:APOLLOTYRE",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "APOLLO TYRES LTD - APOLLOTYRE"  : ""
-s27 = request.security("NSE:APOLLOHOSP",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "APOLLO HOSPITALS ENTER. L - APOLLOHOSP"  : ""
-s28 = request.security("NSE:ASHOKLEY",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ASHOK LEYLAND LTD - ASHOKLEY"  : ""
-s29 = request.security("NSE:ASIANPAINT",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ASIAN PAINTS LIMITED - ASIANPAINT"  : ""
-s30 = request.security("NSE:ATUL",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "ATUL LTD - ATUL"  : ""
-s31 = request.security("NSE:IDFC",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "IDFC LIMITED - IDFC"  : ""
-s32 = request.security("NSE:AUROPHARMA",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "AUROBINDO PHARMA LTD - AUROPHARMA"  : ""
-s33 = request.security("NSE:INDHOTEL",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "THE INDIAN HOTELS CO. LTD - INDHOTEL"  : ""
-s34 = request.security("NSE:BAJAJFINSV",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "BAJAJ FINSERV LTD. - BAJAJFINSV"  : ""
-s35 = request.security("NSE:BAJFINANCE",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "BAJAJ FINANCE LIMITED - BAJFINANCE"  : ""
-s36 = request.security("NSE:BAJAJ_AUTO",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "BAJAJ AUTO LIMITED"  : ""
-s37 = request.security("NSE:BALRAMCHIN",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "BALRAMPUR CHINI MILLS LTD - BALRAMCHIN"  : ""
-s38 = request.security("NSE:BATAINDIA",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "BATA INDIA LTD - BATAINDIA"  : ""
-s39 = request.security("NSE:LALPATHLAB",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "DR. LAL PATH LABS LTD. - LALPATHLAB"  : ""
-s40 = request.security("NSE:BERGEPAINT",timeFrame,someFunc(),ignore_invalid_symbol=false)  ? "BERGER PAINTS (I) LTD - BERGEPAINT"  : ""
+s1 = request.security("NSE:BANKNIFTY",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "NIFTY BANK - BANKNIFTY"  : ""
+s2 = request.security("NSE:NIFTY",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "NIFTY 50 - NIFTY"  : ""
+s3 = request.security("NSE:ACC",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ACC LIMITED - ACC"  : ""
+s4 = request.security("NSE:ACC",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ACC LIMITED - ACC"  : ""
+s5 = request.security("NSE:ACC",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ACC LIMITED - ACC"  : ""
+s6 = request.security("NSE:ACC",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ACC LIMITED - ACC"  : ""
+s7 = request.security("NSE:ABFRL",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ADITYA BIRLA FASHION & RT - ABFRL"  : ""
+s8 = request.security("NSE:IOC",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "INDIAN OIL CORP LTD - IOC"  : ""
+s9 = request.security("NSE:AMBUJACEM",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "AMBUJA CEMENTS LTD - AMBUJACEM"  : ""
+s10 = request.security("NSE:ASTRAL",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ASTRAL LIMITED - ASTRAL"  : ""
+s11 = request.security("NSE:ABB",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ABB INDIA LIMITED - ABB"  : ""
+s12 = request.security("NSE:AUBANK",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "AU SMALL FINANCE BANK LTD - AUBANK"  : ""
+s13 = request.security("NSE:ADANIENT",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ADANI ENTERPRISES LIMITED - ADANIENT"  : ""
+s14 = request.security("NSE:BEL",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "BHARAT ELECTRONICS LTD - BEL"  : ""
+s15 = request.security("NSE:BHEL",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "BHEL - BHEL"  : ""
+s16 = request.security("NSE:CHAMBLFERT",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "CHAMBAL FERTILIZERS LTD - CHAMBLFERT"  : ""
+s17 = request.security("NSE:COALINDIA",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "COAL INDIA LTD - COALINDIA"  : ""
+s18 = request.security("NSE:CROMPTON",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "CROMPT GREA CON ELEC LTD - CROMPTON"  : ""
+s19 = request.security("NSE:DELTACORP",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "DELTA CORP LIMITED - DELTACORP"  : ""
+s20 = request.security("NSE:CHOLAFIN",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "CHOLAMANDALAM IN & FIN CO - CHOLAFIN"  : ""
+s21 = request.security("NSE:ABBOTINDIA",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ABBOTT INDIA LIMITED - ABBOTINDIA"  : ""
+s22 = request.security("NSE:ADANIPORTS",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ADANI PORT & SEZ LTD - ADANIPORTS"  : ""
+s23 = request.security("NSE:ABCAPITAL",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ADITYA BIRLA CAPITAL LTD. - ABCAPITAL"  : ""
+s24 = request.security("NSE:AMARAJABAT",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "AMARA RAJA BATTERIES LTD. - AMARAJABAT"  : ""
+s25 = request.security("NSE:GRASIM",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "GRASIM INDUSTRIES LTD - GRASIM"  : ""
+s26 = request.security("NSE:APOLLOTYRE",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "APOLLO TYRES LTD - APOLLOTYRE"  : ""
+s27 = request.security("NSE:APOLLOHOSP",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "APOLLO HOSPITALS ENTER. L - APOLLOHOSP"  : ""
+s28 = request.security("NSE:ASHOKLEY",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ASHOK LEYLAND LTD - ASHOKLEY"  : ""
+s29 = request.security("NSE:ASIANPAINT",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ASIAN PAINTS LIMITED - ASIANPAINT"  : ""
+s30 = request.security("NSE:ATUL",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "ATUL LTD - ATUL"  : ""
+s31 = request.security("NSE:IDFC",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "IDFC LIMITED - IDFC"  : ""
+s32 = request.security("NSE:AUROPHARMA",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "AUROBINDO PHARMA LTD - AUROPHARMA"  : ""
+s33 = request.security("NSE:INDHOTEL",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "THE INDIAN HOTELS CO. LTD - INDHOTEL"  : ""
+s34 = request.security("NSE:BAJAJFINSV",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "BAJAJ FINSERV LTD. - BAJAJFINSV"  : ""
+s35 = request.security("NSE:BAJFINANCE",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "BAJAJ FINANCE LIMITED - BAJFINANCE"  : ""
+s36 = request.security("NSE:BAJAJ_AUTO",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "BAJAJ AUTO LIMITED"  : ""
+s37 = request.security("NSE:BALRAMCHIN",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "BALRAMPUR CHINI MILLS LTD - BALRAMCHIN"  : ""
+s38 = request.security("NSE:BATAINDIA",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "BATA INDIA LTD - BATAINDIA"  : ""
+s39 = request.security("NSE:LALPATHLAB",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "DR. LAL PATH LABS LTD. - LALPATHLAB"  : ""
+s40 = request.security("NSE:BERGEPAINT",timeFrame,filterFunc(),ignore_invalid_symbol=false)  ? "BERGER PAINTS (I) LTD - BERGEPAINT"  : ""
 
 if str.length(s1)>0
     array.push(scannerArray, s1)
@@ -154,6 +155,8 @@ for i = 1 to array.size(scannerArray)
 // ————— Call MAs on each bar.
 //float ma = ta.sma(close, period)
 // ————— Only execute table code on last bar.
-    if barstate.islast
-    // Period in left column.
+    if barstate.islast and array.size(scannerArray) > 0
         table.cell(panel, 0, i, str.tostring(array.get(scannerArray,i-1)), bgcolor = neutColorInput)
+    else if barstate.islast and array.size(scannerArray) == 0
+    // Period in left column.
+        table.cell(panel, 0, i, str.tostring("NO STOCKS FOUND"), bgcolor = neutColorInput)
