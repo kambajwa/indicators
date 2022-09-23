@@ -1,6 +1,5 @@
-var india = {
-    "totalCount": 3260,
-    "data": [
+
+    var stocks = [
     {
         "s": "NSE:RELIANCE",
         "d": [
@@ -4201,5 +4200,4 @@ var india = {
             "INR"
         ]
     }
-]
-}
+    ]
