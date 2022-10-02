@@ -1,0 +1,75 @@
+//@version=4
+study("My Script", overlay=true)
+
+fastMAlen = input(24, minval=1, title="MACD fast moving average")
+slowMAlen=input(34,minval=1, title="MACD slow moving average")
+signalMACDlen = input(9,minval=1, title="MACD signal line moving average")
+StochLength = input(9, minval=1, title="Stochastic Length")
+switch=input(true, title="Enable MACD Bar Color?")
+
+// MACD Calculation
+MACD = ema(close, fastMAlen) - ema(close, slowMAlen)
+signalMACD = ema(MACD, signalMACDlen)
+delta = MACD - signalMACD
+fastMA = ema(close,fastMAlen)
+slowMA = ema(close,slowMAlen)
+
+//RSI Calculation
+xRSI = rsi(close, 14)
+width=input(2,"line width")
+
+// Stochastic Calculation
+smoothK = input(20, title="Smoothing of Stochastic %K ")
+smoothD = input(20, title="Moving Average of Stochastic %K")
+k = sma(stoch(close, high, low, StochLength), smoothK)
+d = sma(k, smoothD)
+
+
+isLong = false              // A flag for going LONG
+isLong := nz(isLong[1])     // Get the previous value of it
+
+isSell = false              //A flag for squaring off LONG position
+isSell := nz(isSell[1])     // Get the previous value of it
+
+isShort = false             // A flag for going SHORT
+isShort := nz(isShort[1])   // Get the previous value of it
+
+isBuy = false              //A flag for squaring off Short position
+isBuy := nz(isBuy[1])     // Get the previous value of it
+
+
+hi= highest(high,1000)*2
+longCond= (MACD > signalMACD and k > 50 and xRSI > 60 ? hi : na) and not isLong    // Buy only if we are not already long
+CloseLongCond = (MACD < signalMACD ? hi : na) and isLong
+shortCond= (MACD < signalMACD and k < 50 and xRSI < 60 ? hi : na) and not isShort  // Sell only if we are not already short
+CloseShortCond =(MACD > signalMACD ? hi : na) and isShort
+
+
+if (longCond)
+    isLong := true
+    isSell := false
+    isShort := false
+    isBuy := false
+   
+if (CloseLongCond)
+    isSell := true
+    isLong := false
+    isShort := false
+    isBuy := false
+   
+if (shortCond)
+    isShort := true
+    isLong := false
+    isSell := false
+    isBuy := false
+
+if (CloseShortCond)
+    isBuy := true
+    isShort := false
+    isLong := false    
+    isSell := false
+
+plotshape(series=longCond, title="LONG", text="LONG", style=shape.triangleup, location=location.belowbar, color=color.blue, size=size.small)
+plotshape(series=CloseLongCond, title="CLOSE LONG", text="CLOSE LONG", style=shape.triangledown, location=location.abovebar, color=color.blue, size=size.small)
+plotshape(series=shortCond, title="SHORT", text="SHORT", style=shape.triangledown, location=location.abovebar, color=color.purple, size=size.small)
+plotshape(series=CloseShortCond, title="CLOSE SHORT", text="CLOSE SHORT", style=shape.triangleup, location=location.belowbar, color=color.purple, size=size.small)
