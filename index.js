@@ -6,7 +6,7 @@
 indicator("Sahib Screener", "", true)
 var string GP1 = "Volume Average"
 
-string timeFrame  = input.string("60", "timeFrame",options=['5','10','15','30','60', 'D', 'W', 'M'], group = GP1,confirm=true)
+string timeFrame  = input.string("D", "timeFrame",options=['5','10','15','30','60', 'D', 'W', 'M'], group = GP1,confirm=true)
 int averagePeriod    = input.int(30, "Avg Vol", minval = 1, maxval = 100,step=1, group = GP1,confirm=true)
 float averageMultiplier  = input.float(1.5, "Avg Vol Multiplier", minval = 0.1, maxval = 10.0,step=0.1, group = GP1,confirm=true)
 // close > open and math.abs(open-low) > 3*math.abs(close-open) and math.abs(open-low) > math.abs(high-open) // Hammer
